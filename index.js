@@ -1,6 +1,5 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
-require('dotenv').config();
 const path = require('path');
 
 
@@ -19,7 +18,6 @@ app.post('/scrape', async (req, res) => {
         return res.status(400).json({ error: 'VIN is required' });
     }
     const browser = await puppeteer.launch({
-        executablePath: process.env.NODE_ENV === 'production' ? process.env.PUPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
         headless: true, 
         args: ['--no-sandbox', '--disable-setuid-sandbox', "--single-process", "--no-zoygote"]
     });
