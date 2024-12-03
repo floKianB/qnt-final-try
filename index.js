@@ -2,7 +2,6 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 require('dotenv').config();
 const path = require('path');
-const cors = require('cors');
 
 
 const app = express();
@@ -11,7 +10,6 @@ const PORT = 5001;
 // Middleware to serve static files
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.json());
-app.use(cors());
 
 
 // Endpoint for scraping
