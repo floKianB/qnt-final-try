@@ -30,11 +30,10 @@ app.post('/scrape', async (req, res) => {
     try {
         // Launch Puppeteer
         const browser = await puppeteer.launch({
-            // executablePath: 
-            // process.env.NODE_ENV === "production"
-            //     ? process.env.PUPPETEER_EXECUTABLE_PATH 
-            //     : puppeteer.executablePath(),
-            executablePath: puppeteer.executablePath(),
+            executablePath: 
+            process.env.NODE_ENV === "production"
+                ? process.env.PUPPETEER_EXECUTABLE_PATH 
+                : puppeteer.executablePath(),
             headless: true,
             args: ['--no-sandbox', '--disable-setuid-sandbox', '--single-process', '--no-zygote'], // Necessary for Render deployment
         });
