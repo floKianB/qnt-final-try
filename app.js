@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 });
 
 // Scraping Endpoint
-app.post('/scrape', async (req, res) => {
+app.post('https://qnt-final-try-1.onrender.com/scrape', async (req, res) => {
     const { vin } = req.body;
 
     // Validate input
