@@ -17,11 +17,12 @@ app.post('/scrape', async (req, res) => {
     if (!vin) {
         return res.status(400).json({ error: 'VIN is required' });
     }
-    const browser = await puppeteer.launch({
-        headless: true, 
-        args: ['--no-sandbox', '--disable-setuid-sandbox', "--single-process", "--no-zoygote"]
-    });
     try {
+        const browser = await puppeteer.launch({
+            headless: true, 
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
+    
         // Launch Puppeteer
         const page = await browser.newPage();
 
@@ -57,16 +58,15 @@ app.post('/scrape', async (req, res) => {
         const BelowMarket = marketValue2.replace(/[^0-9]/g,"");
         const AboveMarket = marketValue3.replace(/[^0-9]/g,"");
             
+        // Close the browser
+        await browser.close();
 
         // Send the result back to the client
         res.json({ marketValue1: marketAvrage , marketValue2: BelowMarket, marketValue3: AboveMarket });
     } catch (error) {
         console.error('Error scraping market value:', error);
         res.status(500).json({ error: 'Failed to scrape market value' });
-    } finally {
-        // Close the browser
-        await browser.close();
-    }
+    } 
 });
 
 
