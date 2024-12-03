@@ -15,7 +15,7 @@ app.post('/scrape', async (req, res) => {
     if (!vin) {
         return res.status(400).json({ error: 'VIN is required' });
     }
-
+//
     try {
         // Launch Puppeteer
         const browser = await puppeteer.launch({
