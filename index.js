@@ -6,7 +6,7 @@ const app = express();
 const PORT = 5001;
 
 // Middleware to serve static files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.json());
 
 // Endpoint for scraping
@@ -15,13 +15,12 @@ app.post('/scrape', async (req, res) => {
     if (!vin) {
         return res.status(400).json({ error: 'VIN is required' });
     }
-//
+    const browser = await puppeteer.launch({
+        headless: true, 
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
     try {
         // Launch Puppeteer
-        const browser = await puppeteer.launch({
-            headless: true, 
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
-        });
         const page = await browser.newPage();
 
         // Navigate to the third-party website
@@ -56,14 +55,15 @@ app.post('/scrape', async (req, res) => {
         const BelowMarket = marketValue2.replace(/[^0-9]/g,"");
         const AboveMarket = marketValue3.replace(/[^0-9]/g,"");
             
-        // Close the browser
-        await browser.close();
 
         // Send the result back to the client
         res.json({ marketValue1: marketAvrage , marketValue2: BelowMarket, marketValue3: AboveMarket });
     } catch (error) {
         console.error('Error scraping market value:', error);
         res.status(500).json({ error: 'Failed to scrape market value' });
+    } finally {
+        // Close the browser
+        await browser.close();
     }
 });
 
