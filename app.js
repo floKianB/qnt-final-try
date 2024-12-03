@@ -68,7 +68,7 @@ app.post('/scrape', async (req, res) => {
         await browser.close();
 
         // Send the result back to the client
-        res.json({ marketValue1: marketAvrage , marketValue2: BelowMarket, marketValue3: AboveMarket });
+        res.json({ marketValue1: element1 , marketValue2: element2, marketValue3: element3 });
     } catch (error) {
         console.error('Error scraping market value:', error);
         res.status(500).json({ error: 'Failed to scrape market value' });
