@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5001;
 app.use(express.json()); // Parse JSON body
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(cors({
-    origin: '*', // Allow requests from any origin
+    origin: 'https://qnt-final-try-1.onrender.com', // Allow requests from any origin
     credentials: true
 }));
 
