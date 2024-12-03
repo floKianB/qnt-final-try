@@ -10,7 +10,11 @@ const PORT = 5001;
 // Middleware to serve static files
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: ['https://qnt-final-try-1.onrender.com/'],
+    credentials: true
+}));
+
 
 
 // Endpoint for scraping
