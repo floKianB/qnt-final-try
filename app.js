@@ -27,8 +27,8 @@ app.post('/scrape', async (req, res) => {
     try {
         // Launch Puppeteer
         const browser = await puppeteer.launch({
-            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || puppeteer.executablePath(), // Use Puppeteer's bundled Chromium
-            headless: true, // Run in headless mode
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH, // Use Puppeteer's bundled Chromium
+            headless: false, // Run in headless mode
             args: ['--no-sandbox', '--disable-setuid-sandbox'], // Necessary for containerized environments
         });
         console.log('Using browser executable path:', puppeteer.executablePath());
