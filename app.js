@@ -12,7 +12,7 @@ app.use(express.json());
 
 
 // Endpoint for scraping
-app.post('/scrape', async (req, res) => {
+app.post('https://qnt-final-try-1.onrender.com/scrape', async (req, res) => {
     const { vin } = req.body;
     if (!vin) {
         return res.status(400).json({ error: 'VIN is required' });
