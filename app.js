@@ -18,7 +18,10 @@ app.post('/scrape', async (req, res) => {
 
     try {
         // Launch Puppeteer
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            headless: true, 
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
         const page = await browser.newPage();
 
         // Navigate to the third-party website
