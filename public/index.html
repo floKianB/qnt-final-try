@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Value Check</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .form-container input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Check Market Value</h1>
+        <input type="text" id="vin" placeholder="Enter VIN" />
+        <button onclick="checkMarketValue()">Check Market Value</button>
+        <div id="result1"></div>
+        <div id="result2"></div>
+        <div id="result3"></div>
+    </div>
+    <script>
+        async function checkMarketValue() {
+            const vin = document.getElementById('vin').value;
+            if (!vin) {
+                alert('Please enter a VIN');
+                return;
+            }
+
+            try {
+                const response = await fetch('/scrape', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ vin }),
+                });
+
+                const data = await response.json();
+                if (data.error) {
+                    document.getElementById('result1').innerText = `Error: ${data.error}`;
+                } else {
+                    document.getElementById('result1').innerText = `Market Value: ${data.marketValue1}`;
+                    document.getElementById('result2').innerText = `Below Market Value: ${data.marketValue2}`;
+                    document.getElementById('result3').innerText = `Above Market Value: ${data.marketValue3}`;
+                }
+                
+            } catch (error) {
+                console.error('Error fetching market value:', error);
+                document.getElementById('result').innerText = 'An error occurred. Please try again.';
+            }
+        }
+    </script>
+</body>
+</html>
