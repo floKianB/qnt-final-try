@@ -28,7 +28,7 @@
         const vinInput = document.getElementById('vinInput').value; // Get the value of the VIN input
         try {
             // Make a POST request to the backend
-            const response = await fetch('/scrape', {
+            const response = await fetch('https://qnt-final-try-3.onrender.com/scrape', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,17 +42,17 @@
 
             // Parse the JSON response
             const data = await response.json();
-            const { vin } = data;
+            const { marketValue1, marketValue2, marketValue3 } = data;
 
             
-            // console.log(marketValue1)
-            // console.log(marketValue2)
-            // console.log(marketValue3)
+            console.log(marketValue1)
+            console.log(marketValue2)
+            console.log(marketValue3)
             
             // Display results in the HTML
-            document.getElementById('average').innerText = `Market Average: ${data.vin}`;
-            document.getElementById('below').innerText = `Below Market: ${data.vin}`;
-            document.getElementById('above').innerText = `Above Market: ${data.vin}`;
+            document.getElementById('average').innerText = `Market Average: ${data.marketValue1}`;
+            document.getElementById('below').innerText = `Below Market: ${data.marketValue2}`;
+            document.getElementById('above').innerText = `Above Market: ${data.marketValue3}`;
         } catch (error) {
             console.error('Error fetching market value:', error);
             alert('Failed to fetch market value. Please try again later.');
