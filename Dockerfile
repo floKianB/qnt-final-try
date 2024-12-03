@@ -7,5 +7,5 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 Run npm ci
-COPY ..
+COPY . .
 CMD [ "node", "index.js" ]
