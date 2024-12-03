@@ -2,7 +2,7 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const cors = require('cors');
 const path = require('path');
-
+require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
@@ -30,8 +30,9 @@ app.post('/scrape', async (req, res) => {
     try {
         // Launch Puppeteer
         const browser = await puppeteer.launch({
+            executablePath: process.env.NODE_ENV === 'production' ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
             headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'] // Necessary for Render deployment
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--single-process', '--no-zygote'], // Necessary for Render deployment
         });
         const page = await browser.newPage();
 
