@@ -9,10 +9,7 @@ const PORT = process.env.PORT || 5001;
 // Middleware
 app.use(express.json()); // Parse JSON body
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors({
-    origin: 'https://qnt-final-try-3.onrender.com/', // Allow requests from any origin
-    credentials: true
-}));
+app.use(cors());
 
 app.get('/scrape', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
