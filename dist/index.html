@@ -49,15 +49,13 @@
             try {
                 const response = await fetch('https://qnt-final-try-1.onrender.com/scrape', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
                     body: JSON.stringify({ vin }),
                 });
-
                 const data = await response.json();
+                console.log(error);
                 if (data.error) {
                     document.getElementById('result1').innerText = `Error: ${data.error}`;
+                    console.log(data.error);
                 } else {
                     document.getElementById('result1').innerText = `Market Value: ${data.marketValue1}`;
                     document.getElementById('result2').innerText = `Below Market Value: ${data.marketValue2}`;
