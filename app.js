@@ -25,9 +25,17 @@ app.post('/scrape', async (req, res) => {
     }
 
     try {
+        const osPlatform = os.platform(); // possible values are: 'darwin', 'freebsd', 'linux', 'sunos' or 'win32'
+        console.log('Scraper running on platform: ', osPlatform);
+        let executablePaths;
+        if (/^win/i.test(osPlatform)) {
+            executablePaths = '';
+        } else if (/^linux/i.test(osPlatform)) {
+            executablePaths = '/usr/bin/google-chrome';
+        }
         // Launch Puppeteer
         const browser = await puppeteer.launch({
-            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH, // Use Puppeteer's bundled Chromium
+            executablePath: executablePaths, // Use Puppeteer's bundled Chromium
             headless: false, // Run in headless mode
             args: ['--no-sandbox', '--disable-setuid-sandbox'], // Necessary for containerized environments
         });
